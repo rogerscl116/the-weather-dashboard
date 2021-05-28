@@ -18,15 +18,15 @@
   <header class= "bg-dark text-white-50 text-center p-2">
         <h1 class="font-monospace">Weather Dashboard</h1>
   </header>
-
+  <!-- add main container -->
   <main class="container">
     <div class = "row">
         <div class="col-12 col-md-3 p-2 search-column">
             <form class="border p-2" id="city-search-form">
                 <h4 class="font-monospace">Search for a City</h2>
-                <input id="city" type="text" autofocus="true" class="form-input text-center"/>
-                <button class="btn btn-secondary m-2 p-2" type="submit"><i class="fas fa-search"></i></button>
-                <button class="btn btn-secondary m-2 p-2 font-monospace" type="reset" id="clear-history">Clear history</button>
+                <input id="city" type="text" autofocus="true" class="form-input text-center"/><br />
+                <button class="btn btn-secondary m-2" id="search-button" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-secondary font-monospace" id="clear-button" type="reset" id="clear-history"><i class="far fa-trash-alt"></i></button>
             </form>
             <div class="city-list" id="list-group"></div>
         </div>
