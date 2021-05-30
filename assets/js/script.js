@@ -15,11 +15,11 @@ var formSubmitHandler = function(event) {
 event.preventDefault();
 
 // get value from input element
-var cityInput = inputEl.value.trim();
+var city = inputEl.value.trim();
 
-if (cityInput) {
-getWeather(cityInput);
-getFiveDay(cityInput);
+if (city) {
+getWeather(city);
+getFiveDay(city);
 
 // clear old content
 currentWeatherDiv = "";
@@ -45,7 +45,7 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&app
       if (response.ok) {
         response.json().then(function(data) {
           console.log(data);
-          displayWeather(response, city);
+          displayWeather(data, city);
         });
       } else {
         alert('Error: City Not Found');
@@ -54,7 +54,47 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&app
     .catch(function(error) {
       alert("Unable to connect to OpenWeather");
     });
+
+var displayWeather = function(response, city) {
+    currentWeatherDiv.textContent = "";
+    currentHeader.textContent = city;
+    currentHeader.setAttribute("style", "font-style: italic");
+
+    var currentDate = document.createElement("span")
+    currentDate.textContent =" - "+ moment().format("MMM D, YYYY") +" ";
+    currentHeader.appendChild(currentDate);
+
+    var weatherImg = document.createElement("img")
+    weatherImg.setAttribute("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+    currentHeader.appendChild(weatherImg);
+
+    var temperature = document.createElement("span");
+    temperature.textContent = "Temp: " + response.main.temp + " °F";
+    temperature.classList = "list-group-item"
+
+    var humidity = document.createElement("span");
+    humidity.textContent = "Humidity: " + response.main.humidity + " %";
+    humidity.classList = "list-group-item"
+
+    var wind = document.createElement("span");
+    wind.textContent = "Wind: " + response.wind.speed + " MPH";
+    wind.classList = "list-group-item"
+
+    var description = document.createElement("span");
+    description.textContent = response.weather.description;
+    description.classList = "list-group-item"
+    // fix bug
+    currentWeatherDiv.appendChild(temperature);
+
+
+
+
+
+
+
 };
+};
+
 
 var getFiveDay = function(city) {
 
@@ -66,7 +106,7 @@ fetch(apiUrl)
   if (response.ok) {
     response.json().then(function(data) {
       console.log(data);
-      // displayWeather(data, city);
+      //displayWeather(data, city);
     });
   } else {
     alert('Error: City Not Found');
@@ -76,16 +116,6 @@ fetch(apiUrl)
   alert("Unable to connect to OpenWeather");
 });
 };
-
-var displayWeather = function(response, city) {
-    currentWeatherDiv.textContent = "";
-    currentHeader.textContent = city;
-
-    var currentDate = document.createElement("span")
-    currentDate.textContent =" "+ moment(response.dt).format("MMM D, YYYY") +" ";
-    currentHeader.appendChild(currentDate);
-};
-
 
 // add searched cities to localstorage
 var saveSearch = function() {
