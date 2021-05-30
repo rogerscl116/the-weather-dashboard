@@ -44,7 +44,6 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&app
       // request was successful
       if (response.ok) {
         response.json().then(function(data) {
-          console.log(data);
           displayWeather(data, city);
         });
       } else {
@@ -54,46 +53,38 @@ var apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&app
     .catch(function(error) {
       alert("Unable to connect to OpenWeather");
     });
+  };
 
-var displayWeather = function(response, city) {
+var displayWeather = function(data, searchCity) {
     currentWeatherDiv.textContent = "";
-    currentHeader.textContent = city;
-    currentHeader.setAttribute("style", "font-style: italic");
+    currentHeader.textContent = searchCity;
 
     var currentDate = document.createElement("span")
     currentDate.textContent =" - "+ moment().format("MMM D, YYYY") +" ";
     currentHeader.appendChild(currentDate);
 
     var weatherImg = document.createElement("img")
-    weatherImg.setAttribute("src", "http://openweathermap.org/img/w/" + response.weather[0].icon + ".png");
+    weatherImg.setAttribute("src", "http://openweathermap.org/img/w/" + data.weather[0].icon + ".png");
     currentHeader.appendChild(weatherImg);
 
+    // these do not show on page
     var temperature = document.createElement("span");
-    temperature.textContent = "Temp: " + response.main.temp + " °F";
-    temperature.classList = "list-group-item"
+    temperature.textContent = "Temp: " + data.main.temp + " °F";
+    temperature.classList = "list-group-item";
+    //currentWeatherDiv.appendChild(temperature);
 
     var humidity = document.createElement("span");
-    humidity.textContent = "Humidity: " + response.main.humidity + " %";
-    humidity.classList = "list-group-item"
+    humidity.textContent = "Humidity: " + data.main.humidity + " %";
+    humidity.classList = "list-group-item";
+    //currentWeatherDiv.appendChild(humidity);
 
     var wind = document.createElement("span");
-    wind.textContent = "Wind: " + response.wind.speed + " MPH";
-    wind.classList = "list-group-item"
-
-    var description = document.createElement("span");
-    description.textContent = response.weather.description;
-    description.classList = "list-group-item"
-    // fix bug
-    currentWeatherDiv.appendChild(temperature);
-
-
-
-
-
-
+    wind.textContent = "Wind: " + data.wind.speed + " MPH";
+    wind.classList = "list-group-item";
+    //currentWeatherDiv.appendChild(wind);
 
 };
-};
+
 
 
 var getFiveDay = function(city) {
@@ -105,8 +96,7 @@ fetch(apiUrl)
   // request was successful
   if (response.ok) {
     response.json().then(function(data) {
-      console.log(data);
-      //displayWeather(data, city);
+      displayFiveDay(data);
     });
   } else {
     alert('Error: City Not Found');
@@ -116,6 +106,34 @@ fetch(apiUrl)
   alert("Unable to connect to OpenWeather");
 });
 };
+
+var displayFiveDay = function(data) {
+  fiveDayDiv.textContent = "";
+  fiveDayHeader.textContent = "Five Day Forecast:";
+
+  var forecast = data.list;
+    for(var i = 5; i < forecast.length; i = i + 8){
+    var dailyForecast = forecast[i];
+
+  var forecastDiv = document.createElement("div")
+  forecastDiv.class = "card bg-secondary text-dark m-2";
+  //console.log(dailyForecast);
+
+  var forecastDate = document.createElement("h5")
+  forecastDate.textContent = moment(dailyForecast.dt).format("MMM D, YYYY");
+  forecastDate.classList = "card-header text-center";
+  forecastDiv.appendChild(forecastDate);
+
+  var weatherIcon = document.createElement("img")
+  weatherIcon.classList = "card-body text-center";
+  weatherIcon.setAttribute("src", "http://openweathermap.org/img/w/" + data.list[0].weather[0].icon + ".png");
+  forecastDiv.appendChild(weatherIcon);
+
+  fiveDayDiv.appendChild(forecastDiv);
+  
+  }
+}
+
 
 // add searched cities to localstorage
 var saveSearch = function() {
