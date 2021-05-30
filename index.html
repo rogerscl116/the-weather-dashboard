@@ -26,17 +26,17 @@
                 <h4 class="font-monospace">Search for a City</h2>
                 <input id="city" type="text" autofocus="true" class="form-input text-center"/><br />
                 <button class="btn btn-secondary m-2" id="search-button" type="submit"><i class="fas fa-search"></i></button>
-                <button class="btn btn-secondary font-monospace" id="clear-button" type="reset" id="clear-history"><i class="far fa-trash-alt"></i></button>
             </form>
-            <div class="city-list" id="list-group"></div>
+            <div class="city-list" id="history-buttons"></div>
         </div>
         <div class="col-12 col-md-9">
-            <div class="row border selected-city" id="current-forecast">
+            <div class="row border selected-city" id="current-weather">
                 <div class = "col-12">
                     <h2 id="searched-city"></h2>
                     <div id="current-weather-container" class="list-group"></div>
                 </div>  
             </div>
+
             <div class="row border" id="five-day-forecast">
                     <h2 class="col-12" id ="forecast"></h2>
                     <div class="d-flex" id="five-day-container"></div>

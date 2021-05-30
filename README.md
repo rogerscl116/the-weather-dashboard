@@ -13,12 +13,13 @@ Build a weather dashboard that will run in the browser and feature dynamically u
 
 - HTML
 - CSS
+- FONT AWESOME
 - JAVASCRIPT
 - MOMENT.JS
 
-## Screenshots
+## Screenshot
 
-![](./assets/images/)
+![Weather Dashboard Screenshot](./assets/images/weather-screenshot.png)
 
 
 
