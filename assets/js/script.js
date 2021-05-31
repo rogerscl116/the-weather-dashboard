@@ -22,13 +22,14 @@ getWeather(city);
 getFiveDay(city);
 cities.unshift({city});
 
+saveSearch();
+searchHistory(city);
+
 // clear old content
 inputEl.value = "";
 } else {
 alert("Please enter a city.");
 }
-saveSearch();
-pastSearch(city);
 };
 
 // create function when search button is clicked
@@ -189,7 +190,7 @@ var searchHistory = function(searchHistory) {
 
   searchHistoryBtn = document.createElement("button");
   searchHistoryBtn.textContent = searchHistory;
-  searchHistoryBtn.classList = "d-flex w-100 btn-secondary text-light border p-2";
+  searchHistoryBtn.classList = "d-flex w-100 btn-secondary text-light border m-2 p-2";
   searchHistoryBtn.setAttribute("data-city", searchHistory);
   searchHistoryBtn.setAttribute("type", "submit");
 
@@ -200,7 +201,7 @@ var searchHistory = function(searchHistory) {
   var searchHistoryHandler = function (event) {
     var city = event.target.getAttribute("data-city")
     if (city) {
-      getCityWeather(city);
+      getWeather(city);
       getFiveDay(city);
     }
   }
@@ -209,4 +210,4 @@ var searchHistory = function(searchHistory) {
 searchButton.addEventListener("click", formSubmitHandler);
 historyButtons.addEventListener("click", searchHistoryHandler);
 
-// fix bugs with UV Index and history buttons
+// fix bugs with UV Index
