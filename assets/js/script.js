@@ -125,7 +125,7 @@ var displayUvIndex = function (index) {
 
 var getFiveDay = function(city) {
 
-var apiUrl = "http://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=259fafdbfd373c06e5bf522bb9ac44cc"
+var apiUrl = "https://api.openweathermap.org/data/2.5/forecast?q=" + city + "&units=imperial&appid=259fafdbfd373c06e5bf522bb9ac44cc"
 
 fetch(apiUrl)
 .then(function(response) {
