@@ -8,7 +8,6 @@ var fiveDayDiv = document.querySelector("#five-day-container");
 var currentHeader = document.querySelector("#searched-city");
 var fiveDayHeader = document.querySelector("#forecast");
 
-
 var formSubmitHandler = function(event) {
 
 // prevent page from refreshing
@@ -20,9 +19,7 @@ var city = inputEl.value.trim();
 if (city) {
 getWeather(city);
 getFiveDay(city);
-cities.unshift({city});
 
-saveSearch();
 searchHistory(city);
 
 // clear old content
@@ -60,7 +57,7 @@ var displayWeather = function(data, searchCity) {
     currentHeader.textContent = searchCity;
 
     var currentDate = document.createElement("span")
-    currentDate.textContent = ": "+ moment().format("MMM D, YYYY") +" ";
+    currentDate.textContent = " - "+ moment().format("MMM D, YYYY") +" ";
     currentHeader.appendChild(currentDate);
 
     var weatherImg = document.createElement("img")
@@ -90,7 +87,7 @@ var displayWeather = function(data, searchCity) {
 
 var getUvIndex = function (lat, lon) {
 
-  var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&appid=259fafdbfd373c06e5bf522bb9ac44cc"
+  var apiUrl = "https://api.openweathermap.org/data/2.5/uvi?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=259fafdbfd373c06e5bf522bb9ac44cc"
 
   fetch(apiUrl)
   .then(function(response) {
@@ -100,18 +97,18 @@ var getUvIndex = function (lat, lon) {
   })
 }
 
-var displayUvIndex = function (index) {
+var displayUvIndex = function (data) {
   var currentWeatherDiv = document.getElementById("current-weather-container");
   var uvIndex = document.createElement("div");
   uvIndex.textContent = "UV Index: ";
   uvIndex.classList = "list-group-item";
   
   uvIndexValue = document.createElement("span");
-  uvIndexValue.textContent = index.value; 
+  uvIndexValue.textContent = data.value; 
 
-  if (index.value <= 2) {
+  if (data.value <= 2) {
     uvIndexValue.classList = "favorable"
-  } else if (index.value > 2 && index.value <= 8) {
+  } else if (data.value > 2 && data.value <= 7) {
     uvIndexValue.classList= "moderate"
   }
   else {
@@ -148,7 +145,7 @@ var displayFiveDay = function(data) {
     var dailyForecast = forecast[i];
 
   var forecastDiv = document.createElement("div")
-  forecastDiv.classList = "card bg-secondary text-light m-2";
+  forecastDiv.classList = "card w-100 bg-secondary text-light m-2";
 
   var forecastDate = document.createElement("h5")
   forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");
@@ -156,7 +153,7 @@ var displayFiveDay = function(data) {
   forecastDiv.appendChild(forecastDate);
 
   var weatherIcon = document.createElement("img")
-  weatherIcon.classList = "card-body";
+  weatherIcon.classList = "card-body w-50";
   weatherIcon.setAttribute("src", "http://openweathermap.org/img/w/" + dailyForecast.weather[0].icon + ".png");
   forecastDiv.appendChild(weatherIcon);
 
@@ -180,12 +177,6 @@ var displayFiveDay = function(data) {
   }
 }
 
-
-// add searched cities to localstorage
-var saveSearch = function() {
-    localStorage.setItem("cities", JSON.stringify(cities));
-};
-
 var searchHistory = function(searchHistory) {
 
   searchHistoryBtn = document.createElement("button");
@@ -195,7 +186,6 @@ var searchHistory = function(searchHistory) {
   searchHistoryBtn.setAttribute("type", "submit");
 
   historyButtons.prepend(searchHistoryBtn);
-
 }
 
   var searchHistoryHandler = function (event) {
@@ -205,9 +195,8 @@ var searchHistory = function(searchHistory) {
       getFiveDay(city);
     }
   }
+// fix localstorage
 
 // add event listeners for search button and saved cities
 searchButton.addEventListener("click", formSubmitHandler);
 historyButtons.addEventListener("click", searchHistoryHandler);
-
-// fix bugs with UV Index
