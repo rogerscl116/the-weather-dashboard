@@ -19,7 +19,7 @@ Build a weather dashboard that will run in the browser and feature dynamically u
 
 ## Screenshot
 
-![Weather Dashboard Screenshot](./assets/images/weather-screenshot.png)
+![Weather Dashboard Screenshot](./assets/images/weather-screenshot.jpg)
 
 
 
