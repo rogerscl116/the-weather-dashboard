@@ -2,7 +2,7 @@
 
 ## Objective
 
-Build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS. Use OpenWeather One Call API to retreive weather data for cities and use localStorage to store searched cities.
+Build a weather dashboard that will run in the browser and feature dynamically updated HTML and CSS. Use OpenWeather One Call API to retrieve weather data for cities and use localStorage to store searched cities.
 
 ## Review
 
